@@ -14,12 +14,12 @@ public class Coins : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        
         if (other.gameObject.CompareTag("Coin"))
         {
             gm.coins += 1;
             print(gm.coins);
-            Destroy(other.gameObject);
-
+            destroy(other.gameObject);
         }
     }
 
