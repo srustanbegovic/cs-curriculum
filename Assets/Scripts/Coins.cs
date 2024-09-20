@@ -9,6 +9,8 @@ public class Coins : MonoBehaviour
     void Start()
     {
         gm = FindObjectOfType<GameManager>();   
+        gm.coinText.text = ("Coins: " + gm.coins);
+        
     }
 
 
@@ -18,8 +20,8 @@ public class Coins : MonoBehaviour
         if (other.gameObject.CompareTag("Coin"))
         {
             gm.coins += 1;
-            print(gm.coins);
-            destroy(other.gameObject);
+            gm.coinText.text = ("Coins: " + gm.coins);
+            Destroy(other.gameObject);
         }
     }
 
