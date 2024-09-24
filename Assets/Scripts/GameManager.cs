@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+
 using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
@@ -30,7 +31,7 @@ public class GameManager : MonoBehaviour
         
     }
 
-    private void Start()
+    public void Start()
     {
         coins = 0;
         health = 5;
