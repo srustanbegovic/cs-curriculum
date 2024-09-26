@@ -54,9 +54,6 @@ public class PlayerController : MonoBehaviour
     
     //for organization, put other built-in Unity functions here
     
-    
-    
-    
-    
+
     //after all Unity functions, your own functions can go here
 }

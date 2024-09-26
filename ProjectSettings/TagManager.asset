@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Axe
   - Spikes
+  - Wall
   layers:
   - Default
   - TransparentFX
