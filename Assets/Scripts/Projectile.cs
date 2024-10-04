@@ -7,17 +7,17 @@ public class Projectile : MonoBehaviour
 {
     public Vector3 targetPosition;
 
-    private float speed = 9;
+    private float speed;
     // Start is called before the first frame update
     void Start()
     {
-        
+        speed = 10;
     }
 
    
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime).normalized;
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
     }
 }
