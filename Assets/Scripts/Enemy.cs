@@ -6,34 +6,55 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     private float speed;
-    private Vector3 target;
+    private Vector3 targetdest;
     private Vector3 direction;
+    private GameObject target;
     GameManager gm;
 
     private Vector3[] points = new Vector3[]
     {
-        new Vector3(0, -8, 0),
-        new Vector3(-4, -1, 0),
-        new Vector3(-3, -2, 0)
+        new Vector3(0, -11, 0),
+        new Vector3(0, -1, 0),
+        new Vector3(-10, -1, 0),
+        new Vector3(-10,-11,0)
     };
+    enum states
+    {
+        patrol,
+        chase,
+        attack,
+        die
+    }
+
+    private states state;
+    
 
     private int currentTarget = 0;
     void Start()
     {
+        target = null;
         print("point zero" +points[0]);
         speed = 5;
-        target = points[currentTarget];
+        targetdest = points[currentTarget];
         gm = FindFirstObjectByType<GameManager>();
-        direction = (target - transform.position).normalized; 
+        direction = (targetdest - transform.position).normalized; 
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            target = other.gameObject;
+            state = states.chase;
+        }
 
     }
 
-  
+    
     void Update()
     {
-        print(target);
+        
         transform.position += direction * speed * Time.deltaTime;
-        if (Vector3.Distance(transform.position, target) < 0.1f)
+        if (Vector3.Distance(transform.position, targetdest) < 0.1f)
         {
             print("hit target");
             ChangeDirection();
@@ -47,11 +68,12 @@ public class Enemy : MonoBehaviour
     void ChangeDirection()
     {
         currentTarget = (currentTarget + 1) % points.Length;
-        if (currentTarget = 3)
+        if (currentTarget == 4)
         {
             currentTarget = 0;
         }
-        target = points[currentTarget];
-        direction = (target - transform.position).normalized;
+        targetdest = points[currentTarget];
+        direction = (targetdest - transform.position).normalized;
+        print(targetdest);
     }
 }
