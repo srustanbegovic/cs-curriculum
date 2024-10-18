@@ -12,12 +12,6 @@ public class Turret : MonoBehaviour
     private float cooldown = 2;
     public GameObject Projectile;
 
-
-    void Start()
-    {
-
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))

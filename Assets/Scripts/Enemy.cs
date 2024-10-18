@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -8,6 +9,7 @@ public class Enemy : MonoBehaviour
     private float speed;
     private Vector3 targetdest;
     private Vector3 direction;
+    private Vector3 directionchase;
     private GameObject target;
     GameManager gm;
 
@@ -28,43 +30,84 @@ public class Enemy : MonoBehaviour
 
     private states state;
     
-
     private int currentTarget = 0;
     void Start()
     {
         target = null;
         print("point zero" +points[0]);
-        speed = 5;
+        speed = 3;
         targetdest = points[currentTarget];
         gm = FindFirstObjectByType<GameManager>();
         direction = (targetdest - transform.position).normalized; 
     }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            target = other.gameObject;
-            state = states.chase;
-        }
-
-    }
-
-    
     void Update()
     {
-        
+        if (state == states.patrol)
+        {
+            Patrol();
+        }
+        if (state == states.chase)
+        {
+            Chase();
+        }
+        if (state == states.attack)
+        {
+            Attack();
+        }
+        if (state == states.die)
+        {
+            Die();
+        }
+    }
+    void Patrol()
+    {
         transform.position += direction * speed * Time.deltaTime;
         if (Vector3.Distance(transform.position, targetdest) < 0.1f)
         {
             print("hit target");
             ChangeDirection();
+
         }
     }
 
+    void Chase()
+    {
+        directionchase = (target.transform.position - transform.position).normalized;
+        transform.position += directionchase * speed * Time.deltaTime;
+    }
 
+    void Attack()
+    {
+        
+    }
 
+    void Die()
+    {
+        
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            if (other.gameObject.CompareTag("Player"))
+            {
+                print("lock on to player");
+                target = other.gameObject;
+                state = states.chase;
+            }
+        }
 
-
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            print("unlocked from player");
+            target = null;
+            state = states.patrol;
+            ChangeDirection(); 
+        }
+    }
     void ChangeDirection()
     {
         currentTarget = (currentTarget + 1) % points.Length;

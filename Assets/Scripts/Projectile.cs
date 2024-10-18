@@ -17,6 +17,7 @@ public class Projectile : MonoBehaviour
         direction = (targetPosition - transform.position).normalized;
         speed = 10;
         gm = FindFirstObjectByType<GameManager>();
+        timer = 5;
     }
 
 
