@@ -10,8 +10,8 @@ public class TopDown_AnimatorController : MonoBehaviour
     [SerializeField]
     RuntimeAnimatorController animAxe;
 
-    public bool IsAttacking { get; private set; }
-
+    public bool IsAttacking { get;  set; }
+    public bool attacking { get; set; }
     Animator anim;
     SpriteRenderer sprite;
 
@@ -76,14 +76,20 @@ public class TopDown_AnimatorController : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            anim.SetTrigger("Attack");
-            anim.SetBool("IsWalking", false);
+            Attack();
         }
 
         IsAttacking = anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack");
 
     }
 
+    public void Attack()
+    {
+        attacking = true;
+        anim.SetTrigger("Attack");
+        anim.SetBool("IsWalking", false);
+    }
+    
     // Call this function when the player picks up the axe.
     public void SwitchToAxe()
     {

@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour
     float yspeed;
     float ydirection;
     float yvector;
-
     public bool overworld; 
 
     private void Start()

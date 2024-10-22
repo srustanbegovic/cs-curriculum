@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using Unity.VisualScripting;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 public class Enemy : MonoBehaviour
 {
@@ -11,6 +14,11 @@ public class Enemy : MonoBehaviour
     private Vector3 direction;
     private Vector3 directionchase;
     private GameObject target;
+    private float cooldown;
+    public float health;
+    public TopDown_EnemyAnimator animator;
+    public TopDown_AnimatorController panimator;
+    public GameObject coin;
     GameManager gm;
 
     private Vector3[] points = new Vector3[]
@@ -36,6 +44,9 @@ public class Enemy : MonoBehaviour
         target = null;
         print("point zero" +points[0]);
         speed = 3;
+        health = 1;
+        panimator = GetComponentInChildren<TopDown_AnimatorController>();
+        animator = GetComponentInChildren<TopDown_EnemyAnimator>();
         targetdest = points[currentTarget];
         gm = FindFirstObjectByType<GameManager>();
         direction = (targetdest - transform.position).normalized; 
@@ -58,6 +69,10 @@ public class Enemy : MonoBehaviour
         {
             Die();
         }
+        if (health < 1)
+        {
+            state = states.die;
+        }
     }
     void Patrol()
     {
@@ -74,20 +89,43 @@ public class Enemy : MonoBehaviour
     {
         directionchase = (target.transform.position - transform.position).normalized;
         transform.position += directionchase * speed * Time.deltaTime;
+        if (Vector3.Distance(transform.position, target.transform.position) < 2f)
+        {
+            state = states.attack;
+            print("attack state");
+            cooldown = 0;
+        }
     }
 
     void Attack()
     {
-        
+        cooldown -= Time.deltaTime;
+        directionchase = (target.transform.position - transform.position).normalized;
+        transform.position += directionchase * speed * Time.deltaTime;
+        if (Vector3.Distance(transform.position, target.transform.position) < 1f)
+        {
+            print("trying to hit");
+            if (cooldown < 0)
+            {
+                animator.IsAttacking = true;
+                animator.Attack(); 
+                print("hit player");
+                gm.health -= 1;
+                gm.healthText.text = ("Health: " + gm.health);
+                print(gm.health);
+                cooldown = 1;
+            }
+        }
     }
 
     void Die()
     {
-        
+        DropCoin();
+        Destroy(gameObject);
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (state == states.patrol)
         {
             if (other.gameObject.CompareTag("Player"))
             {
@@ -119,4 +157,10 @@ public class Enemy : MonoBehaviour
         direction = (targetdest - transform.position).normalized;
         print(targetdest);
     }
+
+    void DropCoin()
+    {
+        Instantiate(coin, transform.position, Quaternion.identity);
+    }
+    if panimator.
 }
