@@ -69,10 +69,25 @@ public class Enemy : MonoBehaviour
         {
             Die();
         }
-        if (health < 1)
+        if (health != 1)
         {
             state = states.die;
         }
+
+        if (target != null)
+        {
+            if (Vector3.Distance(transform.position, target.transform.position) < 1.5f)
+            {
+                print(panimator.IsAttacking);
+                print("can be hit");
+                if (panimator.IsAttacking)
+                {
+                    print("killed");
+                    health = 0;
+                }
+            }
+        }
+
     }
     void Patrol()
     {
@@ -104,7 +119,7 @@ public class Enemy : MonoBehaviour
         transform.position += directionchase * speed * Time.deltaTime;
         if (Vector3.Distance(transform.position, target.transform.position) < 1f)
         {
-            print("trying to hit");
+            //print("trying to hit");
             if (cooldown < 0)
             {
                 animator.IsAttacking = true;
@@ -131,6 +146,7 @@ public class Enemy : MonoBehaviour
             {
                 print("lock on to player");
                 target = other.gameObject;
+                panimator = target.GetComponentInChildren<TopDown_AnimatorController>();
                 state = states.chase;
             }
         }
@@ -162,5 +178,5 @@ public class Enemy : MonoBehaviour
     {
         Instantiate(coin, transform.position, Quaternion.identity);
     }
-    if panimator.
+    
 }
