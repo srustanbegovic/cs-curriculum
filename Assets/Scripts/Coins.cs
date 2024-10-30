@@ -24,13 +24,5 @@ public class Coins : MonoBehaviour
             Destroy(other.gameObject);
         }
     }
-
-
-
-
-    void Update()
-    {
-        
-    }
 }
 

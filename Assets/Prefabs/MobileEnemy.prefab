@@ -189,7 +189,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   animator: {fileID: 0}
+  panimator: {fileID: 0}
   coin: {fileID: 3462362578362087066, guid: 69c7343f050914c7787bbbe42c07b5b8, type: 3}
+  axe: {fileID: 8928701524657299959, guid: 2d2bc4cf5fda5c740b9cedcdbc7c87ac, type: 3}
 --- !u!1 &6074370204116875197
 GameObject:
   m_ObjectHideFlags: 0

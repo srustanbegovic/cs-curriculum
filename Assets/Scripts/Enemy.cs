@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour
     public TopDown_EnemyAnimator animator;
     public TopDown_AnimatorController panimator;
     public GameObject coin;
+    public GameObject axe;
     GameManager gm;
 
     private Vector3[] points = new Vector3[]
@@ -135,7 +136,8 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
-        DropCoin();
+        //DropCoin();
+        DropAxe();
         Destroy(gameObject);
     }
     private void OnTriggerEnter2D(Collider2D other)
@@ -178,5 +180,9 @@ public class Enemy : MonoBehaviour
     {
         Instantiate(coin, transform.position, Quaternion.identity);
     }
-    
+
+    void DropAxe()
+    {
+        Instantiate(axe, transform.position, Quaternion.identity);
+    }
 }

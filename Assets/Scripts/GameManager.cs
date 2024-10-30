@@ -13,15 +13,17 @@ public class GameManager : MonoBehaviour
     public int health;
     public TextMeshProUGUI coinText;
     public TextMeshProUGUI healthText;
+    public bool Axe;
+    public bool Shovel;
 
     void Awake()
     {
-
+        Axe = false;
+        Shovel = true;
         if (gm != null && gm != this)
-          {
+        {
             Destroy(gameObject);
-
-          }
+        }
         else
         {
           gm = this;

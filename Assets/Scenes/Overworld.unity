@@ -363,8 +363,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1861919207}
-  - {fileID: 1665360716}
   - {fileID: 1270322012}
+  - {fileID: 1665360716}
   m_Father: {fileID: 401039399}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &396992123
@@ -40440,6 +40440,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5774960653562304022, guid: bc139d8bb8dee439490b05712200dfee,
+        type: 3}
+      propertyPath: door
+      value: 
+      objectReference: {fileID: 1665360715}
     - target: {fileID: 7819348094328437333, guid: bc139d8bb8dee439490b05712200dfee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -85011,7 +85016,7 @@ GameObject:
   - component: {fileID: 1861919208}
   m_Layer: 0
   m_Name: Collision Door Removed
-  m_TagString: Untagged
+  m_TagString: CaveDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -85584,6 +85589,8 @@ MonoBehaviour:
   health: 0
   coinText: {fileID: 2030175637}
   healthText: {fileID: 745888667}
+  Axe: 0
+  Shovel: 0
 --- !u!114 &2052716821
 MonoBehaviour:
   m_ObjectHideFlags: 0
