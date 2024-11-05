@@ -84,6 +84,7 @@ public class TopDown_AnimatorController : MonoBehaviour
     }
 
     public void Attack()
+    
     {
         anim.SetTrigger("Attack");
         anim.SetBool("IsWalking", false);

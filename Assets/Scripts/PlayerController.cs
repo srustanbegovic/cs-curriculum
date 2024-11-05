@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime;
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public bool overworld;
     public TopDown_AnimatorController panimator;
     public GameObject door;
+    private bool closeEnough = false;
     GameManager gm; 
     
 
@@ -48,10 +50,10 @@ public class PlayerController : MonoBehaviour
         ydirection = Input.GetAxis("Vertical");
         yvector = yspeed * ydirection * Time.deltaTime;
         transform.Translate(xvector, yvector, 0);
-        if (Vector3.Distance(transform.position, door.transform.position) < 10)
+        
+        
+        if (closeEnough)
         {
-            print(transform.position);
-            print(door.transform.position);
             print("close enough");
             if (gm.Axe)
             { 
@@ -63,8 +65,17 @@ public class PlayerController : MonoBehaviour
             
         }
         
+        
     }
-   
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("CaveDoor"))
+        {
+            closeEnough = true;
+        }
+    }
+
     //for organization, put other built-in Unity functions here
     
 
