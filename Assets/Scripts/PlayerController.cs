@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
+    public float length;
     float xspeed;
     float xdirection;
     float xvector;
@@ -14,9 +14,16 @@ public class PlayerController : MonoBehaviour
     float ydirection;
     float yvector;
     public bool overworld;
+    //private Collider2D pcollider; 
+    private Rigidbody rb; 
     public TopDown_AnimatorController panimator;
     public GameObject door;
     private bool closeEnough = false;
+    private bool isGrounded;
+    private float jumpForce = 5f;
+    private float raycastDistance = 1.0f;
+    private float groundCheckDistance = 4.1f;
+    public LayerMask floor; 
     GameManager gm; 
     
 
@@ -24,6 +31,8 @@ public class PlayerController : MonoBehaviour
     {
         GetComponentInChildren<TopDown_AnimatorController>().enabled = overworld;
         GetComponentInChildren<Platformer_AnimatorController>().enabled = !overworld;
+        //GetComponent<Collider2D>();
+        rb = GetComponent<Rigidbody>();
         gm = FindObjectOfType<GameManager>();
         xspeed = 4;
         xdirection = 0;
@@ -50,7 +59,23 @@ public class PlayerController : MonoBehaviour
         ydirection = Input.GetAxis("Vertical");
         yvector = yspeed * ydirection * Time.deltaTime;
         transform.Translate(xvector, yvector, 0);
+        isGrounded = CheckIfGrounded();
+        //print(isGrounded);
         
+        //TODO set this to a raycasthit
+        if (Physics.Raycast(transform.position, Vector3.down))
+        {
+            print("ground");
+        }
+        Debug.DrawRay(transform.position, Vector3.down);
+        if (isGrounded)
+        {
+            print("grounded");
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+             Jump();   
+            }
+        }
         
         if (closeEnough)
         {
@@ -68,12 +93,27 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    bool CheckIfGrounded()
+    {   if (Physics.Raycast(transform.position, Vector3.down))
+        {
+            return true; 
+        }
+        {
+            return false;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("CaveDoor"))
         {
             closeEnough = true;
         }
+    }
+
+    void Jump()
+    {
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 
     //for organization, put other built-in Unity functions here
