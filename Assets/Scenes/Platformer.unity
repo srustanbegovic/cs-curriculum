@@ -270,6 +270,11 @@ PrefabInstance:
       propertyPath: overworld
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5774960653562304022, guid: bc139d8bb8dee439490b05712200dfee,
+        type: 3}
+      propertyPath: floor.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     - target: {fileID: 7819348094328437333, guid: bc139d8bb8dee439490b05712200dfee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -478,7 +483,7 @@ GameObject:
   - component: {fileID: 934382340}
   - component: {fileID: 934382339}
   - component: {fileID: 934382338}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Collision
   m_TagString: Untagged
   m_Icon: {fileID: 0}

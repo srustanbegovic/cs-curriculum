@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime;
 using UnityEngine;
-
 public class PlayerController : MonoBehaviour
 {
     public float length;
@@ -15,14 +14,15 @@ public class PlayerController : MonoBehaviour
     float yvector;
     public bool overworld;
     //private Collider2D pcollider; 
-    private Rigidbody rb; 
+    private Rigidbody2D rb; 
     public TopDown_AnimatorController panimator;
     public GameObject door;
     private bool closeEnough = false;
     private bool isGrounded;
-    private float jumpForce = 5f;
-    private float raycastDistance = 1.0f;
-    private float groundCheckDistance = 4.1f;
+    private float jumpForce = 0.1f;
+    //private float raycastDistance = 1.0f;
+    public float groundCheckDistance = 1f;
+    private float jumpCooldown = 0.4f;
     public LayerMask floor; 
     GameManager gm; 
     
@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
         GetComponentInChildren<TopDown_AnimatorController>().enabled = overworld;
         GetComponentInChildren<Platformer_AnimatorController>().enabled = !overworld;
         //GetComponent<Collider2D>();
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody2D>();
         gm = FindObjectOfType<GameManager>();
         xspeed = 4;
         xdirection = 0;
@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            GetComponent<Rigidbody2D>().gravityScale = 1;
+            GetComponent<Rigidbody2D>().gravityScale = 2;
             yspeed = 0;
         }
     }
@@ -59,21 +59,20 @@ public class PlayerController : MonoBehaviour
         ydirection = Input.GetAxis("Vertical");
         yvector = yspeed * ydirection * Time.deltaTime;
         transform.Translate(xvector, yvector, 0);
-        isGrounded = CheckIfGrounded();
+        CheckIfGrounded();
+        jumpCooldown -= Time.deltaTime;
         //print(isGrounded);
-        
-        //TODO set this to a raycasthit
-        if (Physics.Raycast(transform.position, Vector3.down))
-        {
-            print("ground");
-        }
         Debug.DrawRay(transform.position, Vector3.down);
         if (isGrounded)
         {
             print("grounded");
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKey(KeyCode.Space))
             {
-             Jump();   
+                if (jumpCooldown < 0)
+                {
+                    print("Pressed Jump");
+                    Jump();   
+                }
             }
         }
         
@@ -93,13 +92,19 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    bool CheckIfGrounded()
-    {   if (Physics.Raycast(transform.position, Vector3.down))
+    void CheckIfGrounded()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, floor);
+        
+        if (hit.collider != null)
         {
-            return true; 
+            isGrounded = true;
+            Debug.Log("Character is on the ground");
         }
+        else
         {
-            return false;
+            isGrounded = false;
+            Debug.Log("Character is in the air");
         }
     }
 
@@ -113,7 +118,8 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        rb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
+        jumpCooldown = 0.4f;
     }
 
     //for organization, put other built-in Unity functions here
