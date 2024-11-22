@@ -17,22 +17,16 @@ public class Health : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        
         if (other.gameObject.CompareTag("Spikes"))
         {
             gm.health -= 1;
             gm.healthText.text = ("Health: " + gm.health);
-            
-            
-                
-
         }
     }
 
     void Die()
     {
         SceneManager.LoadScene("Start");
-        
         gm.coins = 0;
     }
     

@@ -19,12 +19,14 @@ public class PlayerController : MonoBehaviour
     public GameObject door;
     private bool closeEnough = false;
     private bool isGrounded;
-    private float jumpForce = 0.1f;
+    private float jumpForce = 5f;
     //private float raycastDistance = 1.0f;
     public float groundCheckDistance = 1f;
     private float jumpCooldown = 0.4f;
     public LayerMask floor; 
-    GameManager gm; 
+    GameManager gm;
+    public Platform platform;
+    public Vector3 platformvector;
     
 
     private void Start()
@@ -38,8 +40,10 @@ public class PlayerController : MonoBehaviour
         xdirection = 0;
         xvector = 0;
         ydirection = 0;
-        yvector = 0;
+        yvector = 0f;
+        jumpCooldown = 0.4f;
         panimator = GetComponentInChildren<TopDown_AnimatorController>();
+        platform = GetComponentInChildren<Platform>();
         
         if (overworld)
         {
@@ -48,7 +52,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            GetComponent<Rigidbody2D>().gravityScale = 2;
+            GetComponent<Rigidbody2D>().gravityScale = 1f;
             yspeed = 0;
         }
     }
@@ -60,20 +64,19 @@ public class PlayerController : MonoBehaviour
         yvector = yspeed * ydirection * Time.deltaTime;
         transform.Translate(xvector, yvector, 0);
         CheckIfGrounded();
-        jumpCooldown -= Time.deltaTime;
-        //print(isGrounded);
+        jumpCooldown =- Time.deltaTime;
         Debug.DrawRay(transform.position, Vector3.down);
-        if (isGrounded)
+        if (isGrounded && jumpCooldown <= 0)
         {
             print("grounded");
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                if (jumpCooldown < 0)
-                {
-                    print("Pressed Jump");
-                    Jump();   
-                }
+                print("pressed jump"); 
+                Jump();
+                jumpCooldown = 0.4f;
             }
+            
+            
         }
         
         if (closeEnough)
@@ -94,33 +97,44 @@ public class PlayerController : MonoBehaviour
 
     void CheckIfGrounded()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, floor);
-        
-        if (hit.collider != null)
+        RaycastHit2D hitCenter = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, floor);
+        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position + Vector3.left * 0.3f, Vector2.down,
+            groundCheckDistance, floor);
+        RaycastHit2D hitRight = Physics2D.Raycast(transform.position + Vector3.right * 0.3f, Vector2.down,
+            groundCheckDistance, floor);
+        if (hitCenter.collider != null || hitLeft.collider != null || hitRight.collider != null)
         {
             isGrounded = true;
-            Debug.Log("Character is on the ground");
         }
         else
         {
             isGrounded = false;
-            Debug.Log("Character is in the air");
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("CaveDoor"))
+        if (other.CompareTag("PlatformTop"))
         {
-            closeEnough = true;
+            print("on platform");
+            transform.SetParent(other.transform);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("PlatformTop"))
+        {
+            transform.SetParent(null);
         }
     }
 
     void Jump()
     {
-        rb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
-        jumpCooldown = 0.4f;
+        print("Jump Function");
+        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
+    
 
     //for organization, put other built-in Unity functions here
     

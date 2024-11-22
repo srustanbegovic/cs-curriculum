@@ -10,6 +10,7 @@ TagManager:
   - Spikes
   - Wall
   - CaveDoor
+  - PlatformTop
   layers:
   - Default
   - TransparentFX
