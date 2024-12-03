@@ -17212,6 +17212,7 @@ PrefabInstance:
     - target: {fileID: 7316073030588370471, guid: 6c03274cd4d534072863b80352457fab,
         type: 3}
       propertyPath: points.Array.data[1].y
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 7316073030588370471, guid: 6c03274cd4d534072863b80352457fab,
         type: 3}
