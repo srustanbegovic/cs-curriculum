@@ -28,7 +28,6 @@ public class PlayerController : MonoBehaviour
     public Platform platform;
     public Vector3 platformvector;
     
-
     private void Start()
     {
         GetComponentInChildren<TopDown_AnimatorController>().enabled = overworld;
@@ -68,15 +67,13 @@ public class PlayerController : MonoBehaviour
         Debug.DrawRay(transform.position, Vector3.down);
         if (isGrounded && jumpCooldown <= 0)
         {
-            print("grounded");
+            //print("grounded");
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                print("pressed jump"); 
+                print("pressed jump");
                 Jump();
                 jumpCooldown = 0.4f;
             }
-            
-            
         }
         
         if (closeEnough)

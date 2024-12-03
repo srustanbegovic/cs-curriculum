@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
-    public float speed = 2f;
+    public float speed = 0f;
+    public Switch toggle; 
     private Vector3 target;
-    
     private Vector3 targetdest;
     private Vector3 direction; 
     public Vector3[] points = new Vector3[]
@@ -19,6 +19,7 @@ public class Platform : MonoBehaviour
     private int currentTarget = 0;
     void Start()
     {
+       // toggle = FindFirstObjectByType<Switch>();
         targetdest = points[currentTarget];
         direction = (targetdest - transform.position).normalized;
     }
@@ -26,6 +27,15 @@ public class Platform : MonoBehaviour
     
     void Update()
     {
+        if (toggle.isOn)
+        {
+            speed = 2f;
+        }
+
+        if (toggle.isOn == false)
+        {
+            speed = 0f; 
+        }
         transform.position += direction * speed * Time.deltaTime;
         if (Vector3.Distance(transform.position, targetdest) < 0.1f)
         {
