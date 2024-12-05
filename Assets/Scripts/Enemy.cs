@@ -95,7 +95,7 @@ public class Enemy : MonoBehaviour
         transform.position += direction * speed * Time.deltaTime;
         if (Vector3.Distance(transform.position, targetdest) < 0.1f)
         {
-            print("hit target");
+            //print("hit target");
             ChangeDirection();
 
         }
@@ -125,7 +125,7 @@ public class Enemy : MonoBehaviour
             {
                 animator.IsAttacking = true;
                 animator.Attack(); 
-                print("hit player");
+                //print("hit player");
                 gm.health -= 1;
                 gm.healthText.text = ("Health: " + gm.health);
                 print(gm.health);
@@ -173,7 +173,7 @@ public class Enemy : MonoBehaviour
         }
         targetdest = points[currentTarget];
         direction = (targetdest - transform.position).normalized;
-        print(targetdest);
+        //print(targetdest);
     }
 
     void DropCoin()

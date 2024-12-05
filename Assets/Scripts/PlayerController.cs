@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
             //print("grounded");
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                print("pressed jump");
+                //print("pressed jump");
                 Jump();
                 jumpCooldown = 0.4f;
             }
@@ -80,16 +80,13 @@ public class PlayerController : MonoBehaviour
         {
             print("close enough");
             if (gm.Axe)
-            { 
+            {
                 if (panimator.IsAttacking)
                 {
                     Destroy(door);
                 }
             }
-            
         }
-        
-        
     }
 
     void CheckIfGrounded()
@@ -116,6 +113,10 @@ public class PlayerController : MonoBehaviour
             print("on platform");
             transform.SetParent(other.transform);
         }
+        if (other.CompareTag("CaveDoor"))
+        {
+            closeEnough = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -128,7 +129,7 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
-        print("Jump Function");
+        //print("Jump Function");
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
     

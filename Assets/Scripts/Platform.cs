@@ -40,7 +40,7 @@ public class Platform : MonoBehaviour
         if (Vector3.Distance(transform.position, targetdest) < 0.1f)
         {
             ChangeDirection();
-            print("hit target");
+            //print("hit target");
         }
     }
 
@@ -53,6 +53,6 @@ public class Platform : MonoBehaviour
         }
         targetdest = points[currentTarget];
         direction = (targetdest - transform.position).normalized;
-        print(targetdest);
+        //print(targetdest);
     }
 }

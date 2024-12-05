@@ -16,10 +16,7 @@ public class Switch : MonoBehaviour
     void Start()
     {
         spriter = GetComponent<SpriteRenderer>();
-        if (switchSprites.Length > 0 && spriter != null)
-        {
-            spriter.sprite = switchSprites[0];
-        }
+        spriter.sprite = switchSprites[1];
     }
 
     void Update()
@@ -27,13 +24,14 @@ public class Switch : MonoBehaviour
         cooldown -= Time.deltaTime;
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            if (cooldown <= 0f && Input.GetKeyDown(KeyCode.F))
+            //print("close to switch");
+            if (cooldown < 0f && Input.GetKeyDown(KeyCode.F))
             {
-                Debug.Log("Switch activated!");
+                print("Switch activated!");
                 ToggleSwitch();
                 cooldown = 0.5f;
             }
@@ -43,11 +41,7 @@ public class Switch : MonoBehaviour
     void ToggleSwitch()
     {
         isOn = !isOn;
-        if (switchSprites.Length > 0 && spriter != null)
-        {
-            spriter.sprite = switchSprites[isOn ? 1 : 0];
-        }
-
-        Debug.Log("Lever is " + (isOn ? "On" : "Off"));
+        print(isOn);
+        spriter.sprite = switchSprites[isOn ? 1 : 0];
     }
 }
