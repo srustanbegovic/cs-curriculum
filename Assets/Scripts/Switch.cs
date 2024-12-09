@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Switch : MonoBehaviour
@@ -9,39 +6,42 @@ public class Switch : MonoBehaviour
     private float cooldown = 0.5f;
     public bool isOn = false;
     private SpriteRenderer spriter;
+    public GameObject player; 
+    public Sprite[] switchSprites; 
 
-    public Sprite[] switchSprites;
-
+    private Sprite newSprite;
     // Start is called before the first frame update
     void Start()
     {
-        spriter = GetComponent<SpriteRenderer>();
-        spriter.sprite = switchSprites[1];
     }
-
     void Update()
     {
         cooldown -= Time.deltaTime;
-    }
-
-    void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
+        if (Vector3.Distance(transform.position, player.transform.position) <2.5f)
         {
-            //print("close to switch");
-            if (cooldown < 0f && Input.GetKeyDown(KeyCode.F))
-            {
-                print("Switch activated!");
+            print("touching");
+            if (Input.GetKeyDown(KeyCode.F))
+            { 
+                print("Switch activated!"); 
                 ToggleSwitch();
-                cooldown = 0.5f;
+                cooldown = 0.5f;  // Reset cooldown after activation
             }
         }
     }
-
+    
     void ToggleSwitch()
     {
-        isOn = !isOn;
+        isOn = !isOn; // Toggle the switch state
         print(isOn);
-        spriter.sprite = switchSprites[isOn ? 1 : 0];
+
+        // Update the sprite based on the switch state
+        if (isOn)
+        {
+            gameObject.GetComponent<SpriteRenderer>().sprite = switchSprites[1];
+        }
+        else
+        {
+            gameObject.GetComponent<SpriteRenderer>().sprite = switchSprites[0];
+        }
     }
 }
