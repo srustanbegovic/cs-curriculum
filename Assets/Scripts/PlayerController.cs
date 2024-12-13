@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("PlatformTop"))
         {
-            print("on platform");
+            //print("on platform");
             transform.SetParent(other.transform);
         }
         if (other.CompareTag("CaveDoor"))

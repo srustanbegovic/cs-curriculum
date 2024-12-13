@@ -6032,18 +6032,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!114 &1024166824 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7869803674047299266, guid: bc139d8bb8dee439490b05712200dfee,
-    type: 3}
-  m_PrefabInstance: {fileID: 678716977}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63f52f1c934da4613a15cf68f3b0f562, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1057826223 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8518844935661816063, guid: df229e13d3b5a7d4487b64ee824ee13b,
@@ -6921,7 +6909,7 @@ Transform:
   m_GameObject: {fileID: 1447537441}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 46.3, y: 0, z: 0.18030655}
+  m_LocalPosition: {x: 46.26, y: -0.08, z: 0.18030655}
   m_LocalScale: {x: 159, y: 159, z: 159}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -17464,7 +17452,7 @@ PrefabInstance:
     - target: {fileID: 5543172621599039302, guid: 931737135542244f4a79781d5e7e4ea8,
         type: 3}
       propertyPath: m_IsTrigger
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8237309749209477768, guid: 931737135542244f4a79781d5e7e4ea8,
         type: 3}
@@ -17493,7 +17481,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  panimator: {fileID: 1024166824}
+  panimator: {fileID: 0}
+  player: {fileID: 1158042953}
   points:
   - {x: 20, y: -2.9, z: 0}
   - {x: 25, y: -2.9, z: 0}

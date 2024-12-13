@@ -10,7 +10,9 @@ public class CaveEnemy : MonoBehaviour
     private Vector3 targetdest;
     private Vector3 direction;
     public TopDown_AnimatorController panimator;
+    public GameObject player; 
     public Vector3[] points = new Vector3[]
+    
     
     {
         new Vector3(6, 0.5f, 0),
@@ -20,6 +22,7 @@ public class CaveEnemy : MonoBehaviour
     void Start()
     {
         targetdest = points[currentTarget];
+        panimator = FindObjectOfType<TopDown_AnimatorController>();
         direction = (targetdest - transform.position).normalized;
     }
 
@@ -31,18 +34,20 @@ public class CaveEnemy : MonoBehaviour
         {
             ChangeDirection();
         }
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
+        print(panimator.IsAttacking);
+        //print(Vector3.Distance(transform.position, player.transform.position));
+        if (Vector3.Distance(transform.position, player.transform.position) <4f)
         {
+            print("close enough");
+            
             if (panimator.IsAttacking)
             {
                 Destroy(gameObject);
             }
         }
     }
+
+    
 
     void ChangeDirection()
     {
