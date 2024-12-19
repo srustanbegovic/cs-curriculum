@@ -36,11 +36,12 @@ public class CaveEnemy : MonoBehaviour
         }
         print(panimator.IsAttacking);
         //print(Vector3.Distance(transform.position, player.transform.position));
-        if (Vector3.Distance(transform.position, player.transform.position) <4f)
+        //print(Vector3.Distance(transform.position, player.transform.position));
+        if (Vector3.Distance(transform.position, player.transform.position) <3f)
         {
             print("close enough");
             
-            if (panimator.IsAttacking)
+            if (Input.GetMouseButton(0))
             {
                 Destroy(gameObject);
             }
